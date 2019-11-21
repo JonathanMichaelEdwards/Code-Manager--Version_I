@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Code Manager
+Type=Application
+Terminal=false
+Exec=python3.6 /home/jonathan/Desktop/Systems/Projects/GTK/Code_Manager/app/run.py
+Icon=/home/jonathan/Desktop/Systems/Projects/GTK/Code_Manager/app/images/file.png
