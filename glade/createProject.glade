@@ -2,13 +2,12 @@
 <!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
-  <object class="GtkWindow" id="chooseTemplate">
+  <object class="GtkWindow" id="createProject">
     <property name="can_focus">False</property>
     <property name="resizable">False</property>
     <property name="window_position">center</property>
-    <property name="default_width">778</property>
-    <property name="default_height">595</property>
-    <signal name="destroy" handler="on_chooseTemplate_destroy" swapped="no"/>
+    <property name="default_width">800</property>
+    <property name="default_height">619</property>
     <child>
       <placeholder/>
     </child>
@@ -60,7 +59,7 @@
             </child>
           </object>
           <packing>
-            <property name="x">673</property>
+            <property name="x">695</property>
             <property name="y">15</property>
           </packing>
         </child>
@@ -178,11 +177,11 @@
           </object>
           <packing>
             <property name="x">15</property>
-            <property name="y">95</property>
+            <property name="y">130</property>
           </packing>
         </child>
         <child>
-          <object class="GtkEntry" id="entProjetName">
+          <object class="GtkEntry" id="entProjectName">
             <property name="width_request">210</property>
             <property name="height_request">35</property>
             <property name="visible">True</property>
@@ -309,7 +308,7 @@
           </object>
           <packing>
             <property name="x">15</property>
-            <property name="y">345</property>
+            <property name="y">380</property>
           </packing>
         </child>
         <child>
@@ -426,8 +425,8 @@
             </child>
           </object>
           <packing>
-            <property name="x">400</property>
-            <property name="y">95</property>
+            <property name="x">420</property>
+            <property name="y">130</property>
           </packing>
         </child>
         <child>
@@ -544,8 +543,8 @@
             </child>
           </object>
           <packing>
-            <property name="x">400</property>
-            <property name="y">345</property>
+            <property name="x">420</property>
+            <property name="y">380</property>
           </packing>
         </child>
         <child>
@@ -555,7 +554,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <signal name="clicked" handler="on_btnConfirm_clicked" object="lblProjectName" swapped="no"/>
+            <signal name="clicked" handler="on_btnConfirm_clicked" swapped="no"/>
             <child>
               <object class="GtkLabel">
                 <property name="visible">True</property>
@@ -568,8 +567,8 @@
             </child>
           </object>
           <packing>
-            <property name="x">560</property>
-            <property name="y">15</property>
+            <property name="x">370</property>
+            <property name="y">25</property>
           </packing>
         </child>
         <child>
@@ -603,7 +602,7 @@
             </attributes>
           </object>
           <packing>
-            <property name="x">141</property>
+            <property name="x">140</property>
             <property name="y">70</property>
           </packing>
         </child>
@@ -622,6 +621,67 @@
           <packing>
             <property name="x">30</property>
             <property name="y">70</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btnLocation">
+            <property name="width_request">108</property>
+            <property name="height_request">48</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="clicked" handler="on_btnLocation_clicked" swapped="no"/>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Directory</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans 15"/>
+                </attributes>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="x">485</property>
+            <property name="y">25</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="lblLocation">
+            <property name="width_request">644</property>
+            <property name="height_request">24</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="can_default">True</property>
+            <property name="label" translatable="yes">...</property>
+            <property name="xalign">0</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans 12"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">140</property>
+            <property name="y">101</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="width_request">105</property>
+            <property name="height_request">10</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Directory:</property>
+            <property name="use_underline">True</property>
+            <property name="xalign">0</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans 12"/>
+              <attribute name="underline" value="True"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">30</property>
+            <property name="y">103</property>
           </packing>
         </child>
       </object>

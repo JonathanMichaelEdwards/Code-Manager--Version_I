@@ -1,13 +1,9 @@
-#include <stdbool.h>
 #include <gtk/gtk.h>
-#include "codeManager.h"
+#include "manager.h"
+#include "createProject.h"
 
 #define LEN_OF_FILE(FILENAME) 18 + strlen(FILENAME)
-#define NEXT_WINDOW "./chooseTemplate.out"
-
-GtkWidget *window = NULL;
-char command[20];
-bool destroy = false;
+#define FILENAME "manager"
 
 
 /**
@@ -24,34 +20,32 @@ void on_optManage_destroy(void)
  * Create button action.
  * - When pushed, go to the choose options window.
  */
-void on_btnFile_clicked(void)
+void on_btnFile_clicked(GtkButton *button, Layout *_window)
 {
-    destroy = true;
-    memcpy(command, NEXT_WINDOW, strlen(NEXT_WINDOW));
-    gtk_widget_destroy(window);
+    DESTROY_WIDGET(_window->window);
+    createProject();
 }
 
 
 /**
  * Free all memory used.
- * @param fileG - Glade file freed.
+ * @param char *fileG - Glade file freed.
+ * @param Layout *_window - Glade _window that are stored 
+ *        in a struct.
  */
-void freeMem(char *fileG)
+static void freeMem(char *fileG, Layout *_window)
 {
     free(fileG);
+    free(_window);
 }
 
 
-void nextWindow(char *cmd) 
+/**
+ * Runs the Managers GUI application
+ */
+void manager(void)
 {
-    if (destroy) system(cmd);
-}
-
-
-int main(int argc, char **argv)
-{
-    // Initialize gtk
-    gtk_init(&argc, &argv);
+    Layout *_window = (Layout*)malloc(sizeof(Layout));
 
     // Link the Glade GUI builder
     char *fileG = (char*)malloc(sizeof(char) * LEN_OF_FILE(FILENAME));
@@ -59,9 +53,11 @@ int main(int argc, char **argv)
     GtkBuilder *builder = gtk_builder_new_from_file(fileG);
 
     // Create the default Window
-    window = GTK_WIDGET(gtk_builder_get_object(builder, FILENAME));
+    GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, FILENAME));
+    _window->window = window;
+
     gtk_window_set_title(GTK_WINDOW(window), PROJECT_NAME);
-    gtk_builder_connect_signals(builder, NULL);
+    gtk_builder_connect_signals(builder, _window);
     
     g_object_unref(builder);  // Reference builder 
 
@@ -69,9 +65,6 @@ int main(int argc, char **argv)
     gtk_widget_show(window);                
     gtk_main();
 
-    // Free memory and change screens
-    freeMem(fileG);
-    nextWindow(command);
-
-    return EXIT_SUCCESS;
+    // Free memory
+    freeMem(fileG, _window);
 }

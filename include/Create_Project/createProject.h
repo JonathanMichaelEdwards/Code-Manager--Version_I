@@ -1,8 +1,9 @@
 #ifndef CHOOSETEMPLATE_H
 #define CHOOSETEMPLATE_H
 
-#define PROJECT_NAME "Code Manager"
-#define FILENAME "chooseTemplate"
+GtkWidget *setDirectory;
+
+void createProject(void);
 
 
 #endif // CHOOSETEMPLATE_H
