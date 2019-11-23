@@ -2,6 +2,9 @@
 #include "manager.h"
 #include "createProject.h"
 #include "chooseFolder.h"
+// #include <stdio.h>
+// #include <stdlib.h>
+
 
 
 int main(int argc, char **argv)
@@ -14,5 +17,6 @@ int main(int argc, char **argv)
     // createProject();
     // chooseFolder();
 
-    return EXIT_SUCCESS;
+
+    return 0;// EXIT_SUCCESS;
 }
