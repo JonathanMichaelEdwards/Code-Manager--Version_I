@@ -1,26 +1,39 @@
 #include <gtk/gtk.h>
+#include <sys/types.h>
 #include "createProject.h"
+#include "createWindow.h"
 #include "manager.h"
 #include "chooseFolder.h"
 
-#define LEN_OF_FILE(FILENAME) 18 + strlen(FILENAME)
 #define FILENAME "createProject"
+#define STRUCT_SIZE 4
 
 
-typedef struct {
-    Layout window;
-    GtkWidget *lblProjectName;
-    GtkWidget *lblLocation;
-    GtkWidget *entProjectName;
+typedef union {
+    struct {
+        Layout window;
+        GtkWidget *lblProjectName;
+        GtkWidget *lblLocation;
+        GtkWidget *entProjectName;
+    };
+    GtkWidget **widget;
 } Widgets;
     
+
+static const char *WidgetNames[STRUCT_SIZE] = {
+    FILENAME,
+    "lblProjectName",
+    "lblLocation",
+    "entProjectName"
+};
+
 
 
 /**
  * Exit button action.
  * - Exit's the App.
  */
-void on_chooseTemplate_destroy(void)
+void on_createProject_destroy(void)
 {
     gtk_main_quit();
 }
@@ -30,10 +43,18 @@ void on_chooseTemplate_destroy(void)
  * Create button action.
  * - When pushed, go to the choose options window.
  */
-void on_btnBack_clicked(GtkButton *button, Layout *_window)
+void on_btnBack_clicked(GtkButton *button, Widgets *widgets)
 {
-    DESTROY_WIDGET(_window->window);
+    DESTROY_WIDGET(widgets->widget[0]);
     manager();
+}
+
+
+void on_btnNext_clicked(GtkButton *button, Widgets *widgets)
+{
+    // DESTROY_WIDGET(_window->window);
+    // manager();
+    // createProject();
 }
 
 
@@ -44,27 +65,16 @@ void on_btnLocation_clicked(void)
 
 
 /**
- * Set Label when label pushed
+ * Set Project Label Name when the Confirm button is pressed, and
+ * entry is no NULL.
  */
 void on_btnConfirm_clicked(GtkButton *btnConfirm, Widgets *widgets)
 {
-    const char *pName = gtk_entry_get_text(GTK_ENTRY(widgets->entProjectName));
+    const char *pName = gtk_entry_get_text(GTK_ENTRY(widgets->widget[3]));
 
     if (strlen(pName) == 0);
     else
-        gtk_label_set_label(GTK_LABEL(widgets->lblProjectName), pName);
-}
-
-
-/**
- * Free all memory used.
- * @param char *fileG - Glade file freed.
- * @param Widgets *widgets - Glade widgets.
- */
-static void freeMem(char *fileG, Widgets *widgets)
-{
-    free(fileG);
-    g_free(widgets);
+        gtk_label_set_label(GTK_LABEL(widgets->widget[1]), pName);
 }
 
 
@@ -74,29 +84,11 @@ static void freeMem(char *fileG, Widgets *widgets)
 void createProject(void)
 {
     Widgets *widgets = (Widgets*)malloc(sizeof(Widgets));
-
-    // Link the Glade GUI builder
-    char *fileG = (char*)malloc(sizeof(char) * LEN_OF_FILE(FILENAME));
-    sprintf(fileG, "../glade/%s.glade", FILENAME);
-    GtkBuilder *builder = gtk_builder_new_from_file(fileG);
-
-    // Create the window
-    GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, FILENAME));
-    widgets->window.window = window;
-    widgets->lblProjectName = GTK_WIDGET(gtk_builder_get_object(builder, "lblProjectName"));
-    widgets->entProjectName = GTK_WIDGET(gtk_builder_get_object(builder, "entProjectName"));
-    widgets->lblLocation = GTK_WIDGET(gtk_builder_get_object(builder, "lblLocation"));
-    setDirectory = widgets->lblLocation;
-
-    gtk_window_set_title(GTK_WINDOW(window), PROJECT_NAME);
-    gtk_builder_connect_signals(builder, widgets);
     
-    g_object_unref(builder);  // Reference builder 
+    int fd_3 = fork();
 
-    // Execute window
-    gtk_widget_show(window);                
-    gtk_main();
-
-    // Free memory
-    freeMem(fileG, widgets);
+    if (fd_3 == 0) {
+        puts("here");
+        createWindow((Widget*)&widgets, WidgetNames, FILENAME, STRUCT_SIZE);
+    } 
 }

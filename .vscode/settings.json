@@ -1,0 +1,27 @@
+{
+    "files.associations": {
+        "gtk.h": "c",
+        "window_1.h": "c",
+        "cstdlib": "c",
+        "setup.h": "c",
+        "gtkimcontext.h": "c",
+        "gtkimage.h": "c",
+        "stdio.h": "c",
+        "gdk.h": "c",
+        "gtkaboutdialog.h": "c",
+        "gdkconfig.h": "c",
+        "glib.h": "c",
+        "galloca.h": "c",
+        "gtypes.h": "c",
+        "optchoose.h": "c",
+        "code_manager.h": "c",
+        "choosetemplate.h": "c",
+        "codemanager.h": "c",
+        "manager.h": "c",
+        "dialog.h": "c",
+        "typeinfo": "c",
+        "createproject.h": "c",
+        "createwindow.h": "c",
+        "choosefolder.h": "c"
+    }
+}

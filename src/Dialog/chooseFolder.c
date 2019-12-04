@@ -1,16 +1,28 @@
 #include <gtk/gtk.h>
 #include "chooseFolder.h"
+#include "createWindow.h"
 #include "createProject.h"
 #include "manager.h"
 
-#define LEN_OF_FILE(FILENAME) 18 + strlen(FILENAME)
+
 #define FILENAME "chooseFolder"
+#define STRUCT_SIZE 2
 
 
-typedef struct {
-    Layout window;
-    GtkWidget *choose;
+
+typedef union {
+    struct {
+        Layout window;
+        GtkWidget *choose;
+    };
+    GtkWidget **widget;
 } Widgets;
+
+
+static const char *WidgetNames[STRUCT_SIZE] = {
+    FILENAME,
+    "btnchooseFolder"
+};
 
 
 
@@ -24,23 +36,19 @@ void on_chooseFolder_destroy(void)
 }
 
 
+// void sendDirLabel()
+// {
+
+// }
+
+
 void on_btnChooseFolder_clicked(GtkButton *btnUpdate, Widgets *widgets)
 {
-    char *folder = gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(widgets->choose));
-    gtk_label_set_label(GTK_LABEL(setDirectory), folder);
-    DESTROY_WIDGET(widgets->window.window);
-}
-
-
-/**
- * Free all memory used.
- * @param char *fileG - Glade file freed.
- * @param Widgets *widgets - Glade widgets.
- */
-static void freeMem(char *fileG, Widgets *widgets)
-{
-    free(fileG);
-    g_free(widgets);
+    char *folder = gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(widgets->widget[0]));
+    // sendDirLabel(char *folder)
+    puts("send dir");
+    // gtk_label_set_label(GTK_LABEL("needs to change"), folder);
+    DESTROY_WIDGET(widgets->widget[0]);
 }
 
 
@@ -50,27 +58,14 @@ static void freeMem(char *fileG, Widgets *widgets)
 void chooseFolder(void)
 {
     Widgets *widgets = (Widgets*)malloc(sizeof(Widgets));
+    int fd_4 = fork();
 
-    // Link the Glade GUI builder
-    char *fileG = (char*)malloc(sizeof(char) * LEN_OF_FILE(FILENAME));
-    sprintf(fileG, "../glade/%s.glade", FILENAME);
-    GtkBuilder *builder = gtk_builder_new_from_file(fileG);
-
-    // Create the window
-    GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, FILENAME));
-
-    widgets->window.window = window;
-    widgets->choose = GTK_WIDGET(gtk_builder_get_object(builder, "chooseFolder"));
-
-    gtk_window_set_title(GTK_WINDOW(window), PROJECT_NAME);
-    gtk_builder_connect_signals(builder, widgets);
-    
-    g_object_unref(builder);  // Reference builder 
-
-    // Execute window
-    gtk_widget_show(window);                
-    gtk_main();
-
-    // Free memory
-    freeMem(fileG, widgets);
+    if (fd_4 == 0) {
+        puts("here");
+        createWindow((Widget*)&widgets, WidgetNames, FILENAME, STRUCT_SIZE);
+    } else {
+        wait(fd_4);
+        
+        // gtk_label_set_label(GTK_LABEL(WidgetNames[2]), "hello");
+    }
 }

@@ -1,6 +1,6 @@
 # Definitions.
 CC = gcc
-INCLUDES = -I./include -I./include/Dialog -I./include/Create_Project
+INCLUDES = -I./include -I./include/Window_Options -I./include/Dialog -I./include/Create_Project
 CFLAGS = -g -Wall -std=c99 $(INCLUDES) -pthread
 GTK_LIB = `pkg-config --cflags --libs gtk+-3.0` -rdynamic
 
@@ -14,6 +14,9 @@ all: app/Code_Manager.out
 app/main.o: src/main.c
 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
 
+app/windows.o: src/Window_Options/createWindow.c
+	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
+
 app/chooseFolder.o: src/Dialog/chooseFolder.c include/Dialog/chooseFolder.h
 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
 
@@ -25,7 +28,7 @@ app/createProject.o: src/Create_Project/createProject.c include/Create_Project/c
 
 
 # Link: create ELF output file from object files.
-app/Code_Manager.out: app/main.o app/chooseFolder.o app/manager.o app/createProject.o
+app/Code_Manager.out: app/main.o app/manager.o app/windows.o app/createProject.o app/chooseFolder.o
 	$(CC) $^ -o $@ $(GTK_LIB) 
 	
 

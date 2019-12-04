@@ -14,7 +14,7 @@ typedef union {
     struct {
         Layout window;
     };
-    GtkWidget *widget[DEFAULT_SIZE];
+    GtkWidget **widget;
 } Widget;
 
 
