@@ -84,11 +84,5 @@ void on_btnConfirm_clicked(GtkButton *btnConfirm, Widgets *widgets)
 void createProject(void)
 {
     Widgets *widgets = (Widgets*)malloc(sizeof(Widgets));
-    
-    int fd_3 = fork();
-
-    if (fd_3 == 0) {
-        puts("here");
-        createWindow((Widget*)&widgets, WidgetNames, FILENAME, STRUCT_SIZE);
-    } 
+    createWindow((Widget*)&widgets, WidgetNames, FILENAME, STRUCT_SIZE);
 }

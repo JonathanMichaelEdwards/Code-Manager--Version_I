@@ -36,17 +36,10 @@ void on_chooseFolder_destroy(void)
 }
 
 
-// void sendDirLabel()
-// {
-
-// }
-
-
 void on_btnChooseFolder_clicked(GtkButton *btnUpdate, Widgets *widgets)
 {
     char *folder = gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(widgets->widget[0]));
-    // sendDirLabel(char *folder)
-    puts("send dir");
+    puts(folder);
     // gtk_label_set_label(GTK_LABEL("needs to change"), folder);
     DESTROY_WIDGET(widgets->widget[0]);
 }
@@ -58,14 +51,5 @@ void on_btnChooseFolder_clicked(GtkButton *btnUpdate, Widgets *widgets)
 void chooseFolder(void)
 {
     Widgets *widgets = (Widgets*)malloc(sizeof(Widgets));
-    int fd_4 = fork();
-
-    if (fd_4 == 0) {
-        puts("here");
-        createWindow((Widget*)&widgets, WidgetNames, FILENAME, STRUCT_SIZE);
-    } else {
-        wait(fd_4);
-        
-        // gtk_label_set_label(GTK_LABEL(WidgetNames[2]), "hello");
-    }
+    createWindow((Widget*)&widgets, WidgetNames, FILENAME, STRUCT_SIZE);
 }
