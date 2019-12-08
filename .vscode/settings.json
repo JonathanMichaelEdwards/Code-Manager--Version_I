@@ -22,6 +22,7 @@
         "typeinfo": "c",
         "createproject.h": "c",
         "createwindow.h": "c",
-        "choosefolder.h": "c"
+        "choosefolder.h": "c",
+        "fcntl.h": "c"
     }
 }

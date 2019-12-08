@@ -1,7 +1,5 @@
 #include <gtk/gtk.h>
 #include "manager.h"
-#include "createProject.h"
-
 
 
 int main(int argc, char **argv)

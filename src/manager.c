@@ -3,10 +3,15 @@
 #include "createWindow.h"
 #include "createProject.h"
 
+
+// GUI information
 #define FILENAME "manager"
 #define STRUCT_SIZE 1
 
 
+/**
+ * store a **widget
+ */
 typedef union {
     struct {
         Layout window;
@@ -20,9 +25,9 @@ static const char *WidgetNames[STRUCT_SIZE] = {
 };
 
 
+
 /**
- * Exit button action.
- * - Exit's the App.
+ * Quit the program.
  */
 void on_optManage_destroy(void)
 {
@@ -31,21 +36,37 @@ void on_optManage_destroy(void)
 
 
 /**
- * Create button action.
- * - When pushed, go to the choose options window.
+ * Create Project button.
+ * - When pushed, destroy the current window 
+ *   and go to the choose options window.
+ * 
+ * @param ptr_button, contains button signals.
+ * @param ptr_widgets, contains all widgets used
+ *        in the window.
  */
-void on_btnFile_clicked(GtkButton *button,  Widgets *widgets)
+void on_btnCreateProject_clicked(GtkButton *button,  Widgets *widgets)
 {
     DESTROY_WIDGET(widgets->widget[0]);
     createProject();
 }
 
 
+void enableWidgets(Widget *widgets, int enable)
+{
+    if (!enable) gtk_widget_set_sensitive(widgets->widget[0], enable);  // disable
+    else gtk_widget_set_sensitive(widgets->widget[0], enable);          // enable
+}
+
+
 /**
- * Runs the Managers GUI Glade application.
+ * Runs glades manager GUI application, passes
+ * information about the window in the function 
+ * createWindow.
  */
 void manager(void)
 {
-    Widgets *widgets = (Widgets*)malloc(sizeof(Widgets));
+    Widgets *widgets = NULL;
+
+    // Casting Widgets to the default Widget struct
     createWindow((Widget*)&widgets, WidgetNames, FILENAME, STRUCT_SIZE); 
 }
