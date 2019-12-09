@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include "fileIO.h"
 
 
 
@@ -57,7 +58,6 @@ int readFile(const char *fileDir, char **data)
     // read data and close file
     memcpy(tmpData, srcMap, size);
     *data = tmpData;
-    puts(tmpData);
     munmap(srcMap, size);
     close(src);
     remove(fileDir);

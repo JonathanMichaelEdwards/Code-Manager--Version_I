@@ -17,7 +17,7 @@ typedef union {
         Layout window;
     };
     GtkWidget **widget;
-} Widgets;
+} WidgetManager;
 
 
 static const char *WidgetNames[STRUCT_SIZE] = {
@@ -44,17 +44,10 @@ void on_optManage_destroy(void)
  * @param ptr_widgets, contains all widgets used
  *        in the window.
  */
-void on_btnCreateProject_clicked(GtkButton *button,  Widgets *widgets)
+void on_btnCreateProject_clicked(GtkButton *button,  WidgetManager *widgets)
 {
     DESTROY_WIDGET(widgets->widget[0]);
     createProject();
-}
-
-
-void enableWidgets(Widget *widgets, int enable)
-{
-    if (!enable) gtk_widget_set_sensitive(widgets->widget[0], enable);  // disable
-    else gtk_widget_set_sensitive(widgets->widget[0], enable);          // enable
 }
 
 
@@ -65,7 +58,7 @@ void enableWidgets(Widget *widgets, int enable)
  */
 void manager(void)
 {
-    Widgets *widgets = NULL;
+    WidgetManager *widgets = NULL;
 
     // Casting Widgets to the default Widget struct
     createWindow((Widget*)&widgets, WidgetNames, FILENAME, STRUCT_SIZE); 

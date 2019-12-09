@@ -7,7 +7,6 @@
 #define DESTROY_WIDGET(WINDOW) gtk_widget_destroy(WINDOW);
 
 
-void enableWidgets(Widget *widgets, int enable);
 void manager(void);
 
 

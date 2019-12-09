@@ -1,0 +1,16 @@
+{
+    "actionButtons": {
+        "defaultColor": "light-grey",
+        "commands": [
+            {
+                "name": "python $(terminal)",
+                "singleInstance": true,
+                "command": "python3.6",
+            }, {
+                "name": "terminal $(terminal)",
+                "singleInstance": true,
+                "command": "gnome-terminal",
+            }
+        ]
+    }
+}

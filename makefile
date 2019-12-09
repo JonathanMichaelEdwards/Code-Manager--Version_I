@@ -25,13 +25,18 @@ app/manager.o: src/manager.c include/manager.h
 
 app/createProject.o: src/Create_Project/createProject.c include/Create_Project/createProject.h
 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
+	
+app/btnActions.o: src/Create_Project/btnActions.c
+	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
 
 src/Files/fileIO.o: src/Files/fileIO.c include/Files/fileIO.h
 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
 
 
 # Link: create ELF output file from object files.
-app/Code_Manager.out: app/main.o app/manager.o app/windows.o app/createProject.o app/chooseFolder.o src/Files/fileIO.o
+app/Code_Manager.out:                                      \
+app/main.o app/manager.o app/windows.o app/createProject.o \
+app/chooseFolder.o src/Files/fileIO.o app/btnActions.o
 	$(CC) $^ -o $@ $(GTK_LIB) 
 	
 
