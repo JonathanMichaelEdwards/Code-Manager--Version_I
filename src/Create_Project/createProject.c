@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "manager.h"
 #include "createWindow.h"
 #include "createProject.h"
@@ -54,13 +55,6 @@ void on_btnNext_clicked(GtkButton *button, CreateProjectWidgets *widgets)
 }
 
 
-void enableWidgets(CreateProjectWidgets *widgets, int enable)
-{
-    if (!enable) gtk_widget_set_sensitive(widgets->widget[0], enable);  // disable
-    else gtk_widget_set_sensitive(widgets->widget[0], enable);          // enable
-}
-
-
 /**
  * Directory location button.
  * - When pushed, open the choose folder window.
@@ -69,15 +63,15 @@ void on_btnLocation_clicked(GtkButton *location, CreateProjectWidgets *widgets)
 {
     char *data = NULL;
 
-    enableWidgets(widgets, FALSE);
+    ENABLE_WIDGETS(widgets->widget[0], FALSE);
 
     chooseFolder();
 
     int ferror = readFile("../src/Files/folderName.dat", &data);
-    puts(data);
-    if (ferror == 0) gtk_label_set_label(GTK_LABEL(widgets->widget[2]), data);
-    
-    enableWidgets(widgets, TRUE);
+    if (ferror == ) gtk_label_set_label(GTK_LABEL(widgets->widget[2]), data);
+    free(data);  // free stored data
+
+    ENABLE_WIDGETS(widgets->widget[0], TRUE);
 }
 
 
@@ -96,7 +90,7 @@ void on_btnConfirm_clicked(GtkButton *btnConfirm, CreateProjectWidgets *widgets)
 {
     const char *pName = gtk_entry_get_text(GTK_ENTRY(widgets->widget[3]));
 
-    if (strlen(pName) == 0);  // pop up dialog box !!!
+    if (strlen(pName) == EXIT_SUCCESS);  // pop up dialog box !!!
     else
         gtk_label_set_label(GTK_LABEL(widgets->widget[1]), pName);
 }

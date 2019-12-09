@@ -22,44 +22,61 @@ size_t fileSize(int fd, int *error) {
 void writeFile(const char *fileDir, char *data)
 {
     // Open file
-    int file = open(fileDir, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+    int fdWrite = open(fileDir, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 
     // Get file Size
     size_t size = strlen(data);
 
-    if (ftruncate(file, size)) perror("ftruncate");  // truncate file length
+    if (ftruncate(fdWrite, size)) perror("ftruncate");  // truncate file length
 
     // Mapping memory directly to the cpu
-    char *fileMap = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, file, STDIN_FILENO);
+    char *fileMap = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fdWrite, STDIN_FILENO);
 
-    // Write data, and close file
+    // Write data
     memcpy(fileMap, data, size);  
-    // write();
+
+	// Close file
     munmap(fileMap, size);
-    close(file);
+    close(fdWrite);
 }
 
 
+/**
+ * Read an existing file.
+ * - Opens a file and returns it's file discriptor. 
+ * - Find's the length of the file.
+ * - Store memory directly to the cpu.
+ * - Copy file data to temp data. Get data from
+ *  *tempData and 
+ * 
+ * @param ptr_fileDir, the location of the file.
+ * @param double_ptr_data, gets the data stored in
+ * 		  the file. Store *tempData in **data.
+ * @return 0 if file can be read,  
+ *         otherwise -1 for failure.
+ */
 int readFile(const char *fileDir, char **data)
 {
     int error = 0;
 
     // Open file
-    int src = open(fileDir, O_RDONLY);
+    int fdRead = open(fileDir, O_RDONLY);
 
     // Get file Size
-    size_t size = fileSize(src, &error);
+    size_t size = fileSize(fdRead, &error);
     if (error == -1) return -1;
     char *tmpData = (char*)malloc(sizeof(char) * size + 1);
 
     // Mapping memory directly to the cpu
-    char *srcMap = mmap(NULL, size, PROT_READ, MAP_PRIVATE, src, STDIN_FILENO);
+    char *fdReadMap = mmap(NULL, size, PROT_READ, MAP_PRIVATE, fdRead, STDIN_FILENO);
 
-    // read data and close file
-    memcpy(tmpData, srcMap, size);
+    // Copy file data to temp data
+    memcpy(tmpData, fdReadMap, size);
     *data = tmpData;
-    munmap(srcMap, size);
-    close(src);
+    
+	// Close and remove file
+    close(fdRead);
+	munmap(fdReadMap, size);
     remove(fileDir);
 
     return EXIT_SUCCESS;
