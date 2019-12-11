@@ -31,10 +31,13 @@ size_t fileSize(int fd, int *error) {
 
 
 
-void writeFile(const char *fileDir, char *data)
+void writeFile(const char *dir, const char *name, char *data)
 {
+    char *fCreate = (char*)malloc(sizeof(char) * (strlen(dir) + strlen(name)));
+    sprintf(fCreate, "%s/%s", dir, name);
+
     // Open file
-    int fdWrite = open(fileDir, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+    int fdWrite = open(fCreate, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 
     // Get file Size
     size_t size = strlen(data);

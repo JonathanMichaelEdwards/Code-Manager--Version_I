@@ -3,7 +3,7 @@
 
 
 void dirCreate(const char *dir);
-void writeFile(const char *fileDir, char *data);
+void writeFile(const char *dir, const char *name, char *data);
 int readFile(const char *fileDir, char **data);
 
 #endif // FILE_IO_H

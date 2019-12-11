@@ -77,6 +77,7 @@ void on_btnLocation_clicked(GtkButton *location, CreateProjectWidgets *widgets)
 
         sprintf(projectDir, "%s/%s", dir, pName);
         dirCreate(projectDir);
+        writeFile(projectDir, "Template", "hello"); 
 
         free(dir);  
         free(projectDir);

@@ -48,7 +48,7 @@ void on_chooseFolder_destroy(void)
 void on_btnChooseFolder_clicked(GtkButton *btnChoose, Widgets *widgets)
 {
     char *folder = gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(widgets->widget[0]));
-    writeFile("../src/Files/folderName.dat", folder);
+    writeFile("../src/Files", "folderName.dat", folder);
 
     DESTROY_WIDGET(widgets->widget[0]);
 }
