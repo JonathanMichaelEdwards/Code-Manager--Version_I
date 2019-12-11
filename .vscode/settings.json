@@ -23,6 +23,7 @@
         "createproject.h": "c",
         "createwindow.h": "c",
         "choosefolder.h": "c",
-        "fcntl.h": "c"
+        "fcntl.h": "c",
+        "fileio.h": "c"
     }
 }

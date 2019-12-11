@@ -61,15 +61,26 @@ void on_btnNext_clicked(GtkButton *button, CreateProjectWidgets *widgets)
  */
 void on_btnLocation_clicked(GtkButton *location, CreateProjectWidgets *widgets)
 {
-    char *data = NULL;
+    char *dir = NULL;
+
 
     ENABLE_WIDGETS(widgets->widget[0], FALSE);
 
     chooseFolder();
 
-    int ferror = readFile("../src/Files/folderName.dat", &data);
-    if (ferror == ) gtk_label_set_label(GTK_LABEL(widgets->widget[2]), data);
-    free(data);  // free stored data
+    int ferror = readFile("../src/Files/folderName.dat", &dir);
+    if (ferror == EXIT_SUCCESS) {
+        gtk_label_set_label(GTK_LABEL(widgets->widget[2]), dir);
+
+        const char *pName = gtk_label_get_label(GTK_LABEL(widgets->widget[1]));
+        char *projectDir = (char*)malloc(sizeof(char) * (strlen(dir) + strlen(pName)));
+
+        sprintf(projectDir, "%s/%s", dir, pName);
+        dirCreate(projectDir);
+
+        free(dir);  
+        free(projectDir);
+    }
 
     ENABLE_WIDGETS(widgets->widget[0], TRUE);
 }

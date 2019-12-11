@@ -10,6 +10,18 @@
 
 
 
+void dirCreate(const char *dir) {
+    struct stat st = { 0 };
+
+    if (stat(dir, &st) == -1) {
+        int rc = mkdir(dir, 0700);
+        if (rc == -1) {
+            perror("mkdir");
+        }
+    }
+}
+
+
 size_t fileSize(int fd, int *error) {
   struct stat sb;  
   if (fstat(fd, &sb) == -1) *error = -1;
