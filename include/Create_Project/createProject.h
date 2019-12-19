@@ -9,6 +9,8 @@ typedef union {
         GtkWidget *lblProjectName;
         GtkWidget *lblLocation;
         GtkWidget *entProjectName;
+        GtkWidget *btnConfirm;
+        GtkWidget *btnLocation;
         GtkWidget *btnPythonScript;
     };
     GtkWidget **widget;

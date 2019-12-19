@@ -10,7 +10,7 @@
 
 // GUI information
 #define FILENAME "createProject"
-#define STRUCT_SIZE 5
+#define STRUCT_SIZE 7
     
 
 
@@ -19,6 +19,8 @@ static const char *WidgetNames[STRUCT_SIZE] = {
     "lblProjectName",
     "lblLocation",
     "entProjectName",
+    "btnConfirm",
+    "btnLocation",
     "btnPythonScript"
 };
 
@@ -63,8 +65,8 @@ void on_btnLocation_clicked(GtkButton *location, CreateProjectWidgets *widgets)
 {
     char *dir = NULL;
 
-
     ENABLE_WIDGETS(widgets->widget[0], FALSE);
+    ENABLE_WIDGETS(widgets->widget[5], FALSE);
 
     chooseFolder();
 
@@ -77,12 +79,13 @@ void on_btnLocation_clicked(GtkButton *location, CreateProjectWidgets *widgets)
 
         sprintf(projectDir, "%s/%s", dir, pName);
         dirCreate(projectDir);
-        writeFile(projectDir, "Template", "hello"); 
+
+        ENABLE_WIDGETS(widgets->widget[0], TRUE);
+        ENABLE_WIDGETS(widgets->widget[6], TRUE);
 
         free(dir);  
         free(projectDir);
     }
-
     ENABLE_WIDGETS(widgets->widget[0], TRUE);
 }
 
@@ -103,8 +106,12 @@ void on_btnConfirm_clicked(GtkButton *btnConfirm, CreateProjectWidgets *widgets)
     const char *pName = gtk_entry_get_text(GTK_ENTRY(widgets->widget[3]));
 
     if (strlen(pName) == EXIT_SUCCESS);  // pop up dialog box !!!
-    else
+    else {
         gtk_label_set_label(GTK_LABEL(widgets->widget[1]), pName);
+        
+        ENABLE_WIDGETS(widgets->widget[4], FALSE);
+        ENABLE_WIDGETS(widgets->widget[5], TRUE);
+    }
 }
 
 

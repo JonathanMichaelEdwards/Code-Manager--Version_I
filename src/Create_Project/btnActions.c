@@ -21,5 +21,12 @@
  */
 void on_btnPythonScript_clicked(GtkButton *btnConfirm, CreateProjectWidgets *widgets)
 {
-    // system("cd ../src/Templates/Python/Script && python3.6 script.py");    
+    char *dir = NULL;
+
+    int ferror = readFile("../src/Templates/Python/Script/template.py", &dir);
+    if (ferror == EXIT_SUCCESS) {
+        
+
+  
+    }
 }
