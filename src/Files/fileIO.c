@@ -92,7 +92,7 @@ int readFile(const char *fileDir, char **data)
 	// Close and remove file
     close(fdRead);
 	munmap(fdReadMap, size);
-    remove(fileDir);
+    // remove(fileDir);
 
     return EXIT_SUCCESS;
 }

@@ -65,10 +65,15 @@ void on_btnLocation_clicked(GtkButton *location, CreateProjectWidgets *widgets)
 {
     char *dir = NULL;
 
+    // Disable widgets
     ENABLE_WIDGETS(widgets->widget[0], FALSE);
     ENABLE_WIDGETS(widgets->widget[5], FALSE);
 
-    chooseFolder();
+    chooseFolder();  // Pop up window
+
+    // Enable widgets
+    ENABLE_WIDGETS(widgets->widget[0], TRUE);
+    ENABLE_WIDGETS(widgets->widget[5], TRUE);
 
     int ferror = readFile("../src/Files/folderName.dat", &dir);
     if (ferror == EXIT_SUCCESS) {
@@ -78,15 +83,14 @@ void on_btnLocation_clicked(GtkButton *location, CreateProjectWidgets *widgets)
         char *projectDir = (char*)malloc(sizeof(char) * (strlen(dir) + strlen(pName)));
 
         sprintf(projectDir, "%s/%s", dir, pName);
-        dirCreate(projectDir);
+        // dirCreate(projectDir);
 
-        ENABLE_WIDGETS(widgets->widget[0], TRUE);
+        ENABLE_WIDGETS(widgets->widget[5], FALSE);
         ENABLE_WIDGETS(widgets->widget[6], TRUE);
 
         free(dir);  
         free(projectDir);
     }
-    ENABLE_WIDGETS(widgets->widget[0], TRUE);
 }
 
 
